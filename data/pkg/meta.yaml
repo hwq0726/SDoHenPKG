@@ -1,0 +1,81 @@
+dataset_name: primekg
+edge_data:
+- file_name: edges_0_0.csv
+  etype: [gene/protein, protein_protein, gene/protein]
+- file_name: edges_0_1.csv
+  etype: [gene/protein, protein_drug, drug]
+- file_name: edges_0_2.csv
+  etype: [gene/protein, protein_disease, disease]
+- file_name: edges_0_3.csv
+  etype: [gene/protein, protein_effect, effect/phenotype]
+- file_name: edges_0_4.csv
+  etype: [gene/protein, protein_exposure, exposure]
+- file_name: edges_0_5.csv
+  etype: [gene/protein, protein_molecular_function, molecular_function]
+- file_name: edges_0_6.csv
+  etype: [gene/protein, protein_cellular_component, cellular_component]
+- file_name: edges_0_7.csv  
+  etype: [gene/protein, protein_biological_process, biological_process]
+- file_name: edges_0_8.csv
+  etype: [gene/protein, protein_pathway, pathway]
+- file_name: edges_0_9.csv
+  etype: [gene/protein, protein_anatomy, anatomy]
+- file_name: edges_1_0.csv
+  etype: [drug, drug_protein, gene/protein]
+- file_name: edges_1_1.csv
+  etype: [drug, drug_drug, drug]
+- file_name: edges_1_2.csv
+  etype: [drug, drug_disease, disease]
+- file_name: edges_1_3.csv
+  etype: [drug, drug_effect, effect/phenotype]
+- file_name: edges_2_0.csv
+  etype: [disease, disease_protein, gene/protein]
+- file_name: edges_2_1.csv
+  etype: [disease, disease_drug, drug]
+- file_name: edges_2_2.csv
+  etype: [disease, disease_disease, disease]
+- file_name: edges_2_3.csv  
+  etype: [disease, disease_effect, effect/phenotype]
+- file_name: edges_2_4.csv
+  etype: [disease, disease_exposure, exposure]
+- file_name: edges_3_0.csv
+  etype: [effect/phenotype, effect_protein, gene/protein]
+- file_name: edges_3_1.csv
+  etype: [effect/phenotype, effect_drug, drug]
+- file_name: edges_3_2.csv
+  etype: [effect/phenotype, effect_disease, disease]
+- file_name: edges_4_0.csv
+  etype: [exposure, exposure_protein, gene/protein]
+- file_name: edges_4_2.csv
+  etype: [exposure, exposure_disease, disease]
+- file_name: edges_5_0.csv
+  etype: [molecular_function, molecular_function_protein, gene/protein]
+- file_name: edges_6_0.csv
+  etype: [cellular_component, cellular_component_protein, gene/protein]
+- file_name: edges_7_0.csv
+  etype: [biological_process, biological_process_protein, gene/protein]
+- file_name: edges_8_0.csv
+  etype: [pathway, pathway_protein, gene/protein]
+- file_name: edges_9_0.csv
+  etype: [anatomy, anatomy_protein, gene/protein]
+node_data:
+- file_name: nodes_0.csv
+  ntype: gene/protein
+- file_name: nodes_1.csv
+  ntype: drug
+- file_name: nodes_2.csv
+  ntype: disease
+- file_name: nodes_3.csv
+  ntype: effect/phenotype
+- file_name: nodes_4.csv
+  ntype: exposure
+- file_name: nodes_5.csv
+  ntype: molecular_function
+- file_name: nodes_6.csv
+  ntype: cellular_component
+- file_name: nodes_7.csv
+  ntype: biological_process
+- file_name: nodes_8.csv
+  ntype: pathway
+- file_name: nodes_9.csv  
+  ntype: anatomy
