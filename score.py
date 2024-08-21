@@ -262,4 +262,3 @@ for etype in tqdm(etypes):
 with open(f'mrr_score/mrr_{run_id}.pkl', 'wb') as f:
     pickle.dump(mrr_score, f)
 
-print('test')
