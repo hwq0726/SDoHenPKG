@@ -14,11 +14,11 @@ import os
 from scipy.stats import ttest_rel
 import pandas as pd
 import scipy.sparse as sp
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--edge_type', type=tuple, default=('gene/protein', 'protein_protein', 'gene/protein'), help='Target edges')
+parser.add_argument('--edge_type', type=tuple, default=('gene/protein', 'protein_SDoH factor', 'SDoH factor'), help='Target edges')
 parser.add_argument('--in_features', type=int, default=100, help='Input feature dimension & the original feature dimension')
 parser.add_argument('--hid_feats1', type=int, default=200, help='First hidden layer dimension')
 parser.add_argument('--hid_feats2', type=int, default=400, help='Second hidden layer dimension')
@@ -153,9 +153,13 @@ for epoch in tqdm(range(epochs)):
 u, v = g.edges(etype=relation)
 u = u.cpu()
 v = v.cpu()
-num_of_nodes = num_nodes_dict[relation[0]]
-adj = sp.coo_matrix((np.ones(len(u)), (u.numpy(), v.numpy())), shape=(num_of_nodes, num_of_nodes))
-adj_neg = 1 - adj.todense() - np.eye(num_of_nodes)
+num_of_nodes_0 = num_nodes_dict[relation[0]]
+num_of_nodes_1 = num_nodes_dict[relation[2]]
+adj = sp.coo_matrix((np.ones(len(u)), (u.numpy(), v.numpy())), shape=(num_of_nodes_0, num_of_nodes_1))
+if relation[0] == relation[2]:
+    adj_neg = 1 - adj.todense() - np.eye(num_of_nodes_0)
+else:
+    adj_neg = 1 - adj.todense()
 neg_u, neg_v = np.where(adj_neg != 0)
 predict_target = dgl.heterograph(
         {relation: (neg_u, neg_v)},
@@ -169,25 +173,25 @@ with torch.no_grad():
 
 # save the results
 results = {'edges': (neg_u, neg_v), 'score': likelihoods}
-with open(f'exp_pred/exp_pred_{run_id}.pkl', 'wb') as f:
+with open(f'exp_pred/exp_pred_{run_id}_{relation[1]}.pkl', 'wb') as f:
     pickle.dump(results, f)
 
-# plot histogram
-plt.hist(likelihoods.cpu().numpy(), bins=100)
-plt.yscale('log')
-plt.xlabel('Likelihood')
-plt.ylabel('Frequency')
-plt.title('Likelihood Distribution')
-plt.savefig(f'histogram_{run_id}.png')
-plt.show()
-
-# plot heatmap
-heatmap_data = np.full((num_of_nodes, num_of_nodes), np.nan)
-for i in tqdm(range(len(neg_u))):
-    heatmap_data[neg_u[i], neg_v[i]] = likelihoods.view(-1)[i].item()
-
-plt.imshow(heatmap_data, cmap='viridis', aspect='auto')
-plt.colorbar()
-plt.savefig(f'heatmap_{run_id}.png')
-plt.show()
+# # plot histogram
+# plt.hist(likelihoods.cpu().numpy(), bins=100)
+# plt.yscale('log')
+# plt.xlabel('Likelihood')
+# plt.ylabel('Frequency')
+# plt.title('Likelihood Distribution')
+# plt.savefig(f'histogram_{run_id}.png')
+# plt.show()
+#
+# # plot heatmap
+# heatmap_data = np.full((num_of_nodes, num_of_nodes), np.nan)
+# for i in tqdm(range(len(neg_u))):
+#     heatmap_data[neg_u[i], neg_v[i]] = likelihoods.view(-1)[i].item()
+#
+# plt.imshow(heatmap_data, cmap='viridis', aspect='auto')
+# plt.colorbar()
+# plt.savefig(f'heatmap_{run_id}.png')
+# plt.show()
 
