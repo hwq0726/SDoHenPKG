@@ -11,4 +11,4 @@ source activate sdoh
 
 cd /cbica/home/hewei/projects/Stq
 
-python exploratory_prediction.py --epoch 500
+python exploratory_prediction.py --epoch 250

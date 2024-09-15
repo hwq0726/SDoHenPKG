@@ -14,7 +14,7 @@ import os
 from scipy.stats import ttest_rel
 import pandas as pd
 import scipy.sparse as sp
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 
 parser = argparse.ArgumentParser()
@@ -176,14 +176,31 @@ results = {'edges': (neg_u, neg_v), 'score': likelihoods}
 with open(f'exp_pred/exp_pred_{run_id}_{relation[1]}.pkl', 'wb') as f:
     pickle.dump(results, f)
 
-# # plot histogram
-# plt.hist(likelihoods.cpu().numpy(), bins=100)
-# plt.yscale('log')
-# plt.xlabel('Likelihood')
-# plt.ylabel('Frequency')
-# plt.title('Likelihood Distribution')
-# plt.savefig(f'histogram_{run_id}.png')
-# plt.show()
+# plot histogram
+plt.hist(likelihoods.cpu().numpy(), bins=100)
+plt.yscale('log')
+plt.xlabel('Likelihood')
+plt.ylabel('Frequency')
+plt.title('Likelihood Distribution')
+plt.savefig(f'exp_pred/plots/histogram_{run_id}_{relation[1]}.png')
+plt.show()
+
+ll_array = likelihoods.view(-1).cpu().numpy()
+# Get indices of sorted scores (in ascending order)
+sorted_indices = np.argsort(-ll_array)
+# Calculate the index for the top 1/10000th score
+length = int(len(ll_array)/10000)
+# Get the indices for the top 1/10000th scores
+top_fraction_indices = sorted_indices[:length]
+src, dst = neg_u[top_fraction_indices], neg_v[top_fraction_indices]
+merge_map = pd.read_csv('data/mergeid.csv')
+merge_0 = merge_map[merge_map['x_type'] == relation[0]]
+merge_1 = merge_map[merge_map['x_type'] == relation[2]]
+src_name = [merge_0['x_name'].tolist()[i] for i in src]
+dst_name = [merge_1['x_name'].tolist()[i] for i in dst]
+df = pd.DataFrame({'head': src_name, 'tail': dst_name})
+# save df
+df.to_csv(f'exp_pred/potential_{relation[1]}.csv', index=False)
 #
 # # plot heatmap
 # heatmap_data = np.full((num_of_nodes, num_of_nodes), np.nan)
