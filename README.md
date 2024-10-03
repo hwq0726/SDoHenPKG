@@ -9,7 +9,14 @@ To run the experiment, ensure you have the Deep Graph Library ([DGL](https://www
 ```bash
 pip install dgl -f https://data.dgl.ai/wheels/torch-2.3/cu121/repo.html
 ```
-The `requirements.txt` file will be updated soon to include the necessary dependencies.
+
+To deploy the environment, a recommended way is to use conda to create the environment and install the related packages shown as follows.
+
+```bash
+conda create -n SDoHenPKG python=3.10
+pip install -r requirements.txt
+conda activate SDoHenPKG 
+```
 
 ### 🔨 Usage
 All experiments are implemented on a SLURM cluster. You can find the relevant scripts in the [`slurm_scripts`](slurm_scripts) directory.
