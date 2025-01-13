@@ -22,5 +22,8 @@ conda activate SDoHenPKG
 ### 🔨 Usage
 All experiments are implemented on a SLURM cluster. You can find the relevant scripts in the [`slurm_scripts`](slurm_scripts) directory.
 
-To extract SDoH - Biomedical triplets (LLM prompts included) : main.py
+To extract SDoH - Biomedical triplets (LLM prompts included):
+```
+python main.py <data_path> <model>
+```
 To build knowledge graph and construct files for prediction: makegraph.ipynb 
