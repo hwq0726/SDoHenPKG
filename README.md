@@ -26,4 +26,18 @@ To extract SDoH - Biomedical triplets (LLM prompts included):
 ```
 python main.py <data_path> <model>
 ```
-To build knowledge graph and construct files for prediction: makegraph.ipynb 
+To build knowledge graph and construct files for prediction: makegraph.ipynb
+
+### 📖 Citation
+If you find this work helpful, please consider citing our paper:
+
+```bibtex
+@article{shang2025leveraging,
+  title={Leveraging social determinants of health in alzheimer’s research using llm-augmented literature mining and knowledge graphs},
+  author={Shang, Tianqi and Yang, Shu and He, Weiqing and Zhai, Tianhua and Li, Dawei and Hou, Bojian and Chen, Tianlong and Moore, Jason H and Ritchie, Marylyn D and Shen, Li},
+  journal={AMIA Summits on Translational Science Proceedings},
+  volume={2025},
+  pages={491},
+  year={2025}
+}
+```
